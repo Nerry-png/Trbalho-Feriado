@@ -1,10 +1,8 @@
+# Completo com interface!!!
+
+import tkinter
 import requests
 import re
-import tkinter
-from tkinter.filedialog import askopenfilename
-
-
-Ano = ""
 
 def ChamadaAPI(Ano):
     url = "https://date.nager.at/api/v3/PublicHolidays/"+Ano+"/BR"
@@ -34,6 +32,22 @@ def CriarLista(Ano):
     with open("feriados.txt") as Feriados:
        print(Feriados.read())
 
-print("Qual o ano?")
-Ano = input()
-CriarLista(Ano)
+root = tkinter.Tk()
+root.title("Feriados!!!")
+root.resizable(True, True)
+
+myvar = tkinter.StringVar()
+
+def data(*args):
+  print ("Ano", myvar.get())
+  CriarLista(myvar.get())
+
+label = tkinter.Label(root, textvariable=myvar)
+label.pack()
+
+text_entry = tkinter.Entry(root, textvariable=myvar)
+button1 = tkinter.Button(root, text="Me dê os feriados!", command=data) 
+button1.pack()
+text_entry.pack()
+    
+root.mainloop()
