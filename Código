@@ -1,0 +1,18 @@
+# Teste da chamada API
+
+import requests
+import re
+
+def ChamadaAPI(Ano):
+    url = "https://date.nager.at/api/v3/PublicHolidays/"+Ano+"/BR"
+
+    payload = {}
+    headers = {
+      'accept': 'application/json'
+      }
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+
+    return response.text
+
+print(ChamadaAPI("2024"))
