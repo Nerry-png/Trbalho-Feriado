@@ -1,7 +1,10 @@
-# Teste da chamada API
-
 import requests
 import re
+import tkinter
+from tkinter.filedialog import askopenfilename
+
+
+Ano = ""
 
 def ChamadaAPI(Ano):
     url = "https://date.nager.at/api/v3/PublicHolidays/"+Ano+"/BR"
@@ -15,4 +18,22 @@ def ChamadaAPI(Ano):
 
     return response.text
 
-print(ChamadaAPI("2024"))
+def CriarLista(Ano):
+    Feriados = open("feriados.txt", "a")
+    
+    with open("feriados.txt", "a") as Feriados:
+      Feriados.write("")
+
+    ListaFeriados = set(re.findall("\d{4}-\d{2}-\d{2}", ChamadaAPI(Ano)))
+
+    for feriado in ListaFeriados:
+      with open("feriados.txt", "a") as Feriados:
+        Feriados.write(feriado)
+        Feriados.write(" é feriado!\n")
+
+    with open("feriados.txt") as Feriados:
+       print(Feriados.read())
+
+print("Qual o ano?")
+Ano = input()
+CriarLista(Ano)
